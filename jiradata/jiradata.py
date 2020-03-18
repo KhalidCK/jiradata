@@ -1,7 +1,8 @@
 import json
 from functools import reduce
 import operator
-from typing import Iterable, Any
+from typing import Iterable, Any, List, Tuple, Set
+from collections import Counter
 
 
 def load_data(path: str) -> list:
@@ -66,3 +67,12 @@ def get_jiradata(issue: dict) -> dict:
         'description': get_description(issue),
         'labels': get_labels(issue)
     }
+
+
+def get_top_label(issues) -> Set[Tuple[str, float]]:
+    """retrieve top tags and compute relative usage normalize between 0,1"""
+    labels = [get_labels(issue) for issue in issues]
+    all_labels = reduce(operator.add, labels)
+    counter = Counter(all_labels)
+    nb_ticket = len(issues)
+    return set((k, round(v/nb_ticket, 2)) for k, v in counter.most_common())
