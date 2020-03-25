@@ -3,6 +3,7 @@ from functools import reduce
 import operator
 from typing import Iterable, Any, List, Tuple, Set
 from collections import Counter
+import logging
 
 
 def load_data(path: str) -> list:
@@ -51,6 +52,16 @@ def get_date_updated(issue) -> str:
     return get_by_path(issue, ('fields', 'updated'))
 
 
+def get_issue_owner(issue: dict) -> str:
+    """try to retrieve the displayName, when it failed return an empty str"""
+    try:
+        return get_by_path(issue, ('fields', 'assignee', 'displayName'))
+    except TypeError:
+        logging.warning(
+            f'not able to retrieve assignee name from "{issue["key"]}", is there an assignee ?')
+        return ''
+
+
 def filter_epics(issues: list) -> list:
     return [issue for issue in issues if get_issue_type(issue) == 'Epic']
 
@@ -65,7 +76,8 @@ def get_jiradata(issue: dict) -> dict:
         'date_created': get_date_created(issue),
         'title': get_title(issue),
         'description': get_description(issue),
-        'labels': get_labels(issue)
+        'labels': get_labels(issue),
+        'owner': get_issue_owner(issue)
     }
 
 
