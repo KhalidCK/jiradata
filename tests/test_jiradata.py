@@ -1,4 +1,4 @@
-from jiradata import get_by_path, get_top_label
+from jiradata import get_by_path, get_top_label, get_jiradata
 from jiradata import jiradata
 
 dummy_issue = {'expand': 'operations,versionedRepresentations,editmeta,changelog,renderedFields',
@@ -226,5 +226,11 @@ def test_get_top_label():
     assert get_top_label(dummy_labels) == {
         ('pirate', 2/4), ('marine', 2/4), ('hero', 1/4), ('vilain', 1/4)}
 
+
 def test_get_issue_owner():
     jiradata.get_issue_owner(dummy_issue) == 'Uzumaki Kickass'
+
+
+def test_get_jiradata():
+    result = get_jiradata(dummy_issue)
+    assert len(result.keys()) == 10
