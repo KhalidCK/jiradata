@@ -1,4 +1,4 @@
-from jiradata import get_by_path, get_top_label, get_jiradata
+from jiradata import get_by_path, get_top_label, get_jiradata,get_comments
 from jiradata import jiradata
 
 dummy_issue = {'expand': 'operations,versionedRepresentations,editmeta,changelog,renderedFields',
@@ -209,6 +209,34 @@ dummy_issue = {'expand': 'operations,versionedRepresentations,editmeta,changelog
                           'customfield_11208': None,
                           'duedate': None}}
 
+dummy_comment = {'self': 'https://jira.io/rest/api/2/issue/782674/comment/747211',
+                 'id': '747211',
+                 'author': {'self': 'https://jira.io/rest/api/2/user?username=takzeo.musashi%40legends.com',
+                            'name': 'takzeo.musashi@legends.com',
+                            'key': 'takzeo.musashi@legends.com',
+                            'emailAddress': 'takzeo.musashi@legends.com',
+                            'avatarUrls': {'48x48': 'https://jira.io/secure/useravatar?ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                           '24x24': 'https://jira.io/secure/useravatar?size=small&ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                           '16x16': 'https://jira.io/secure/useravatar?size=xsmall&ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                           '32x32': 'https://jira.io/secure/useravatar?size=medium&ownerId=takzeo.musashi%40legends.com&avatarId=20630'},
+                            'displayName': 'Takzeo Musashi',
+                            'active': True,
+                            'timeZone': 'Europe/Paris'},
+                 'body': 'No pain, no gain',
+                 'updateAuthor': {'self': 'https://jira.io/rest/api/2/user?username=takzeo.musashi%40legends.com',
+                                  'name': 'takzeo.musashi@legends.com',
+                                  'key': 'takzeo.musashi@legends.com',
+                                  'emailAddress': 'takzeo.musashi@legends.com',
+                                  'avatarUrls': {'48x48': 'https://jira.io/secure/useravatar?ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                                 '24x24': 'https://jira.io/secure/useravatar?size=small&ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                                 '16x16': 'https://jira.io/secure/useravatar?size=xsmall&ownerId=takzeo.musashi%40legends.com&avatarId=20630',
+                                                 '32x32': 'https://jira.io/secure/useravatar?size=medium&ownerId=takzeo.musashi%40legends.com&avatarId=20630'},
+                                  'displayName': 'Takzeo Musashi',
+                                  'active': True,
+                                  'timeZone': 'Europe/Paris'},
+                 'created': '2020-03-18T14:41:00.289+0100',
+                 'updated': '2020-03-18T14:41:00.289+0100'}
+
 
 def test_get_by_path():
     dummy = {'a': 1,
@@ -234,3 +262,17 @@ def test_get_issue_owner():
 def test_get_jiradata():
     result = get_jiradata(dummy_issue)
     assert len(result.keys()) == 10
+
+
+def test_struct_comment():
+    parts = jiradata.struct_comment(dummy_comment, 100)
+    assert parts == ('Takzeo Musashi', 'No pain, no gain')
+    parts = jiradata.struct_comment(dummy_comment, 5)
+    assert parts == ('Takzeo Musashi', 'too long')
+
+
+def test_get_comments():
+    comments = {'key': 'myid','fields': {'comment': {'comments': [dummy_comment]}}}
+    parts = get_comments(comments)
+    assert parts['ref'] == 'myid'
+

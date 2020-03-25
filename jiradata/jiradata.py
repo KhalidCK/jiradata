@@ -4,6 +4,7 @@ import operator
 from typing import Iterable, Any, List, Tuple, Set
 from collections import Counter
 import logging
+import re
 
 
 def load_data(path: str) -> list:
@@ -64,6 +65,35 @@ def get_issue_owner(issue: dict) -> str:
 
 def filter_epics(issues: list) -> list:
     return [issue for issue in issues if get_issue_type(issue) == 'Epic']
+
+
+def struct_comment(comment: dict, size_limit: int) -> tuple:
+    """retrieve key information :(author,comment content)"""
+    def normalize(text):
+        if not text:
+            return
+        text = text.strip()
+        text = re.sub(r'\s+', ' ', text)
+        return text
+    text = comment['body']
+    author = comment['author']
+    if author.get('displayName'):
+        name = author['displayName']
+    else:
+        name = author['key']
+    text = normalize(text) if len(text) < size_limit else 'too long'
+    return (name, text)
+
+
+def get_comments(issue: dict) -> dict:
+    comments = get_by_path(issue, ('fields', 'comment', 'comments'))
+    if len(comments) == 0:
+        return {}
+    last_comment = comments[-1]
+    return {'ref': get_reference(issue),
+            'comment': struct_comment(last_comment, 450),
+            'comment_update': last_comment['updated']
+            }
 
 
 def get_jiradata(issue: dict) -> dict:
