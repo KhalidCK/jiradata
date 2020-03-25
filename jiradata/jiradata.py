@@ -86,6 +86,7 @@ def struct_comment(comment: dict, size_limit: int) -> tuple:
 
 
 def get_comments(issue: dict) -> dict:
+    """retrieve information regarding last comment for an issue"""
     comments = get_by_path(issue, ('fields', 'comment', 'comments'))
     if len(comments) == 0:
         return {}
