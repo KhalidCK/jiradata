@@ -5,6 +5,8 @@ from typing import Iterable, Any, List, Tuple, Set
 from collections import Counter
 import logging
 import re
+from jiradata import models
+from dataclasses import asdict
 
 
 def load_data(path: str) -> list:
@@ -97,21 +99,6 @@ def get_comments(issue: dict) -> dict:
             }
 
 
-def get_jiradata(issue: dict) -> dict:
-    return {
-        'ref': get_reference(issue),
-        'status': get_status(issue),
-        'priority': get_priority(issue),
-        'issue_type': get_issue_type(issue),
-        'date_update': get_date_updated(issue),
-        'date_created': get_date_created(issue),
-        'title': get_title(issue),
-        'description': get_description(issue),
-        'labels': get_labels(issue),
-        'owner': get_issue_owner(issue)
-    }
-
-
 def get_top_label(issues) -> Set[Tuple[str, float]]:
     """retrieve top tags and compute relative usage normalize between 0,1"""
     labels = [get_labels(issue) for issue in issues]
@@ -119,3 +106,22 @@ def get_top_label(issues) -> Set[Tuple[str, float]]:
     counter = Counter(all_labels)
     nb_ticket = len(issues)
     return set((k, round(v/nb_ticket, 2)) for k, v in counter.most_common())
+
+
+def get_ticket(issue: dict) -> models.JiraTicket:
+    return models.JiraTicket(
+        ref=get_reference(issue),
+        status=get_status(issue),
+        priority=get_priority(issue),
+        issue_type=get_issue_type(issue),
+        date_update=get_date_updated(issue),
+        date_created=get_date_created(issue),
+        title=get_title(issue),
+        description=get_description(issue),
+        labels=get_labels(issue),
+        owner=get_issue_owner(issue)
+    )
+
+
+def get_jiradata(issue: dict) -> dict:
+    return asdict(get_ticket(issue))
