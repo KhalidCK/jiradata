@@ -1,0 +1,6 @@
+{
+  "jql": "project = QA",
+  "startAt": 0,
+  "maxResults": 2,
+  "fields": ["id", "key"]
+}

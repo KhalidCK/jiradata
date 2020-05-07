@@ -1,127 +1,126 @@
 import json
-from functools import reduce
-import operator
-from typing import Iterable, Any, List, Tuple, Set
-from collections import Counter
 import logging
+import operator
 import re
-from jiradata import models
+import sys
+from collections import Counter
 from dataclasses import asdict
+from functools import reduce
+from typing import Any, Iterable, List, Set, Tuple, Union
+
+import click
+import pandas as pd
+from collections import namedtuple
+
+# standard key in a JIRA issue
+KEYS = ['assignee',
+        'comment',
+        'created',
+        'creator',
+        'description',
+        'issuetype',
+        'labels',
+        'priority',
+        'reporter',
+        'status',
+        'summary']
+
+Issue = namedtuple('Issue', ['key']+KEYS)
 
 
-def load_data(path: str) -> list:
-    return json.load(open(path, 'r', encoding='utf8'))
+Comment = namedtuple('Comment', ['author', 'updated', 'msg'])
 
 
-def get_by_path(root: dict, items: Iterable) -> Any:
-    # courtesy: https://stackoverflow.com/a/14692747/5538961
-    """Access a nested object in root by item sequence."""
-    return reduce(operator.getitem, items, root)
+def process_scalar(elt) -> str:
+    return str(elt)
 
 
-def get_issue_type(issue: dict) -> str:
-    return get_by_path(issue, ('fields', 'issuetype', 'name'))
+def process_list(elts: list) -> str:
+    return ','.join(elts)
 
 
-def get_reference(issue):
-    return issue['key']
+def process_name(elt: dict) -> str:
+    return elt.get('name', '')
 
 
-def get_title(issue):
-    return get_by_path(issue, ('fields', 'summary'))
+def process_comment(comments: list) -> Comment:
+    return get_last_comment(comments)
 
 
-def get_labels(issue) -> list:
-    return get_by_path(issue, ('fields', 'labels'))
+def get_gist_comment(comment: dict, threshold: int) -> Comment:
+    """retrieve key information
 
+    cut-off description lenght at `threshold`
 
-def get_description(issue):
-    return get_by_path(issue, ('fields', 'description'))
-
-
-def get_status(issue) -> str:
-    return get_by_path(issue, ('fields', 'status', 'name'))
-
-
-def get_priority(issue) -> str:
-    return get_by_path(issue, ('fields', 'priority', 'name'))
-
-
-def get_date_created(issue) -> str:
-    return get_by_path(issue, ('fields', 'created'))
-
-
-def get_date_updated(issue) -> str:
-    return get_by_path(issue, ('fields', 'updated'))
-
-
-def get_issue_owner(issue: dict) -> str:
-    """try to retrieve the displayName, when it failed return an empty str"""
-    try:
-        return get_by_path(issue, ('fields', 'assignee', 'displayName'))
-    except TypeError:
-        logging.warning(
-            f'not able to retrieve assignee name from "{issue["key"]}", is there an assignee ?')
-        return ''
-
-
-def filter_epics(issues: list) -> list:
-    return [issue for issue in issues if get_issue_type(issue) == 'Epic']
-
-
-def struct_comment(comment: dict, size_limit: int) -> tuple:
-    """retrieve key information :(author,comment content)"""
+    """
     def normalize(text):
         if not text:
-            return
+            return ''
         text = text.strip()
         text = re.sub(r'\s+', ' ', text)
         return text
     text = comment['body']
     author = comment['author']
-    if author.get('displayName'):
-        name = author['displayName']
-    else:
-        name = author['key']
-    text = normalize(text) if len(text) < size_limit else 'too long'
-    return (name, text)
+    author = author['displayName'] if 'displayName' in author else author['key']
+    text = normalize(text) if len(
+        text) < threshold else text[:threshold]+'[...]'
+    return Comment(author, comment['updated'], text)
 
 
-def get_comments(issue: dict) -> dict:
-    """retrieve information regarding last comment for an issue"""
-    comments = get_by_path(issue, ('fields', 'comment', 'comments'))
+def get_last_comment(comments: list, threshold: int = 150) -> Comment:
+    """sum up recent comment"""
     if len(comments) == 0:
-        return {}
+        return Comment('', '', '')
     last_comment = comments[-1]
-    return {'ref': get_reference(issue),
-            'comment': struct_comment(last_comment, 450),
-            'comment_update': last_comment['updated']
-            }
+    return get_gist_comment(last_comment, threshold)
 
 
-def get_top_label(issues) -> Set[Tuple[str, float]]:
-    """retrieve top tags and compute relative usage normalize between 0,1"""
-    labels = [get_labels(issue) for issue in issues]
-    all_labels = reduce(operator.add, labels)
-    counter = Counter(all_labels)
-    nb_ticket = len(issues)
-    return set((k, round(v/nb_ticket, 2)) for k, v in counter.most_common())
+def comment2str(comment: Comment) -> str:
+    if not comment.msg:
+        return ''
+    ts = comment.updated.split('T')[0]
+    return f"{ts},{comment.author}:{comment.msg}"
 
 
-def get_ticket(issue: dict) -> models.JiraTicket:
-    return models.JiraTicket(
-        ref=get_reference(issue),
-        status=get_status(issue),
-        priority=get_priority(issue),
-        issue_type=get_issue_type(issue),
-        date_update=get_date_updated(issue),
-        date_created=get_date_created(issue),
-        title=get_title(issue),
-        description=get_description(issue),
-        labels=get_labels(issue),
-        owner=get_issue_owner(issue)
-    )
+def process_comments(comments):
+    return get_last_comment(comments['comments'])
 
 
-def get_jiradata(issue: dict) -> dict:
-    return asdict(get_ticket(issue))
+def get_gist_issue(key: str, issue: dict) -> Issue:
+    def get_processor(k):
+        fct = processor[k]
+        try:
+            return fct(issue[k])
+        except Exception:
+            return
+    processor = {'assignee': process_name,
+                 'comment': process_comments,
+                 'created': process_scalar,
+                 'creator': process_name,
+                 'description': process_scalar,
+                 'issuetype': process_name,
+                 'labels': process_list,
+                 'priority': process_name,
+                 'reporter': process_name,
+                 'status': process_name,
+                 'summary': process_scalar}
+    values = [key]+[get_processor(k) for k in KEYS]
+    return Issue(*values)
+
+
+def make_report(issues: list) -> pd.DataFrame:
+    processed = [get_gist_issue(issue['key'], issue['fields'])
+                 for issue in issues]
+    df = pd.DataFrame(processed)
+    df['comment'] = df['comment'].apply(comment2str)
+    return df
+
+
+@click.command()
+@click.argument('reportfile', type=click.Path(dir_okay=True))
+@click.argument('jsondata', type=click.File(mode='r'), default=sys.stdin)
+def cli(reportfile, jsondata):
+    # write a csv to reportfile
+    issues = json.load(jsondata)['issues']
+    click.echo(f'writing result to {reportfile}')
+    make_report(issues).to_csv(reportfile, index=False)
