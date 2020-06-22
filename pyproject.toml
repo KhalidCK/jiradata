@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jiradata"
-version = "1.0.0"
+version = "1.0.1"
 description = "Simple JIRA data manipulation"
 authors = ["Khalid <khalidck@gmail.com>"]
 
