@@ -1,12 +1,17 @@
 # Jira data
 
-Massage data for JIRA issues.
+> Cause sometimes you need to sort out your issues 
 
-> Cause sometimes you need to sort out issues
+Programmatic way to pull out your issues.
+
+
+## Install
+
+`pip install jiradata`
 
 ## How to use ?
 
-Write csv file
+Write a csv report
 
 ```shell
 cat response.json | jiradata myreport.csv
@@ -36,3 +41,7 @@ Command line (redirect stdout to the right location)
 ```sh
 cat config.json|http -a myusername post 'https://myconfluence.com/api/2/search'
 ```
+
+## Related
+
+Built in jira : [Export results to microsoft Excel](https://confluence.atlassian.com/jira061/jira-user-s-guide/searching-for-issues/working-with-search-result-data/exporting-search-results-to-microsoft-excel)
