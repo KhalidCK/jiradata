@@ -1,0 +1,50 @@
+[
+  {
+    "epic_key": "GG-EPICA",
+    "epic_summary": "Epic description",
+    "assignee": "uzumaki.kickass@freeworld.com",
+    "comment": "2020-03-18,Takzeo Musashi:No pain, no gain",
+    "created": "2020-03-23T17:38:38.000+0100",
+    "creator": "creator.kickass@freeworld.com",
+    "description": "Let me write something\nReally long\n\nCause why not ?",
+    "issuetype": "Task",
+    "labels": "plusultra,backfire",
+    "priority": "Highest",
+    "reporter": "reporter.kickass@freeworld.com",
+    "status": "In Progress",
+    "summary": "How to escape ?",
+    "key": "DELTA-1931"
+  },
+  {
+    "epic_key": null,
+    "epic_summary": null,
+    "assignee": null,
+    "comment": null,
+    "created": "2010-01-13T10:02:50.000+0100",
+    "creator": "nameowner.LastName@mydomain.com",
+    "description": "Epic description",
+    "issuetype": "Epic",
+    "labels": "lab1,lab2",
+    "priority": "Medium",
+    "reporter": "nameowner.LastName@mydomain.com",
+    "status": "Backlog",
+    "summary": "Epic summary",
+    "key": "GG-EPICA"
+  },
+  {
+    "epic_key": null,
+    "epic_summary": null,
+    "assignee": "userB@user.com",
+    "comment": "2020-04-01,user somecomment",
+    "created": "2018-02-02T20:30",
+    "creator": "creator",
+    "description": " no epic",
+    "issuetype": "Task",
+    "labels": null,
+    "priority": "High",
+    "reporter": "reporter@me.com",
+    "status": "Done",
+    "summary": null,
+    "key": "XX-1"
+  }
+]

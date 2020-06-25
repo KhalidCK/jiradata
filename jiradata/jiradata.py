@@ -25,8 +25,6 @@ KEYS = ['assignee',
         'status',
         'summary']
 
-Issue = namedtuple('Issue', ['key']+KEYS)
-
 
 Comment = namedtuple('Comment', ['author', 'updated', 'msg'])
 
@@ -86,7 +84,7 @@ def process_comments(comments):
     return get_last_comment(comments['comments'])
 
 
-def get_gist_issue(key: str, issue: dict) -> Issue:
+def get_gist_issue(key: str, issue: dict, custom_field: dict = {}) -> dict:
     def get_processor(k):
         fct = processor[k]
         try:
@@ -104,23 +102,52 @@ def get_gist_issue(key: str, issue: dict) -> Issue:
                  'reporter': process_name,
                  'status': process_name,
                  'summary': process_scalar}
-    values = [key]+[get_processor(k) for k in KEYS]
-    return Issue(*values)
+    processor = {**processor, **custom_field}
+    fields = {k: get_processor(k) for k in processor}
+    fields['key'] = key
+    return fields
 
 
-def make_report(issues: list) -> pd.DataFrame:
-    processed = [get_gist_issue(issue['key'], issue['fields'])
+def make_report(issues: list, custom:dict={}) -> pd.DataFrame:
+    processed = [get_gist_issue(issue['key'], issue['fields'], custom)
                  for issue in issues]
     df = pd.DataFrame(processed)
     df['comment'] = df['comment'].apply(comment2str)
     return df
 
 
+def add_epic(report: pd.DataFrame, epic_field: str) -> pd.DataFrame:
+    epic = report.query('issuetype=="Epic"')[['key', 'description']]
+    epic = epic.rename(
+        columns={'description': 'epic_summary', 
+                 'key': 'epic_key'})
+    merged = pd.merge(left=report, right=epic, how='left',
+                      left_on=epic_field, right_on='epic_key')
+    return merged.drop(columns=epic_field)
+
+def writecsv(df:pd.DataFrame,reportfile):
+    df.sort_index(axis=1).to_csv(reportfile, index=False)
+
 @click.command()
 @click.argument('reportfile', type=click.Path(dir_okay=True))
 @click.argument('jsondata', type=click.File(mode='r'), default=sys.stdin)
-def cli(reportfile, jsondata):
+@click.option('--custom-field')
+@click.option('--epic-field')
+def cli(reportfile, jsondata, custom_field, epic_field):
     # write a csv to reportfile
+    if custom_field:
+        custom = {custom_field: lambda x: str(x)}
+    elif epic_field:
+        custom = {epic_field: lambda x:str(x)}
+    else:
+        custom = {}
     issues = json.load(jsondata)['issues']
-    click.echo(f'writing result to {reportfile}')
-    make_report(issues).to_csv(reportfile, index=False)
+    report = make_report(issues, custom=custom)
+    if epic_field:
+        click.echo(f'looking for epic using field {epic_field}')
+        report = add_epic(report,epic_field)
+        click.echo(f'writing result to {reportfile}')
+        writecsv(report,reportfile)
+    else:
+        click.echo(f'writing result to {reportfile}')
+        writecsv(report,reportfile)

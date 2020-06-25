@@ -1,0 +1,327 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 5,
+  "total": 2,
+  "issues": [
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "1035906",
+      "self": "https://jira.fr.anotherworld/rest/api/2/issue/1035906",
+      "key": "DELTA-1931",
+      "fields": {
+        "fixVersions": [],
+        "resolution": null,
+        "lastViewed": null,
+        "priority": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/priority/1",
+          "iconUrl": "https://jira.fr.anotherworld/images/icons/priorities/highest.svg",
+          "name": "Highest",
+          "id": "1"
+        },
+        "customfield_10000": "GG-EPICA",
+        "labels": ["plusultra", "backfire"],
+        "aggregatetimeoriginalestimate": null,
+        "timeestimate": null,
+        "versions": [],
+        "issuelinks": [],
+        "assignee": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/user?username=uzumaki.kickass%40freeworld.com",
+          "name": "uzumaki.kickass@freeworld.com",
+          "key": "uzumaki.kickass@freeworld.com",
+          "emailAddress": "uzumaki.kickass@freeworld.com",
+          "avatarUrls": {
+            "48x48": "https://jira.fr.anotherworld/secure/useravatar?avatarId=10122",
+            "24x24": "https://jira.fr.anotherworld/secure/useravatar?size=small&avatarId=10122",
+            "16x16": "https://jira.fr.anotherworld/secure/useravatar?size=xsmall&avatarId=10122",
+            "32x32": "https://jira.fr.anotherworld/secure/useravatar?size=medium&avatarId=10122"
+          },
+          "displayName": "uzumaki ROJO BRAVO",
+          "active": true,
+          "timeZone": "Europe/Paris"
+        },
+        "status": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/status/3",
+          "description": "This issue is being actively worked on at the moment by the assignee.",
+          "iconUrl": "https://jira.fr.anotherworld/images/icons/statuses/inprogress.png",
+          "name": "In Progress",
+          "id": "3",
+          "statusCategory": {
+            "self": "https://jira.fr.anotherworld/rest/api/2/statuscategory/4",
+            "id": 4,
+            "key": "indeterminate",
+            "colorName": "yellow",
+            "name": "In Progress"
+          }
+        },
+        "components": [
+          {
+            "self": "https://jira.fr.anotherworld/rest/api/2/component/45698",
+            "id": "45698",
+            "name": "MyDomain",
+            "description": "Composant MyDomain"
+          }
+        ],
+
+        "creator": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/user?username=uzumaki.kickass%40freeworld.com",
+          "name": "creator.kickass@freeworld.com",
+          "key": "uzumaki.kickass@freeworld.com",
+          "emailAddress": "uzumaki.kickass@freeworld.com",
+          "avatarUrls": {
+            "48x48": "https://jira.fr.anotherworld/secure/useravatar?avatarId=10122",
+            "24x24": "https://jira.fr.anotherworld/secure/useravatar?size=small&avatarId=10122",
+            "16x16": "https://jira.fr.anotherworld/secure/useravatar?size=xsmall&avatarId=10122",
+            "32x32": "https://jira.fr.anotherworld/secure/useravatar?size=medium&avatarId=10122"
+          },
+          "displayName": "uzumaki ROJO BRAVO",
+          "active": true,
+          "timeZone": "Europe/Paris"
+        },
+        "subtasks": [],
+        "reporter": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/user?username=uzumaki.kickass%40freeworld.com",
+          "name": "reporter.kickass@freeworld.com",
+          "key": "reporter.kickass@freeworld.com",
+          "emailAddress": "uzumaki.kickass@freeworld.com",
+          "avatarUrls": {
+            "48x48": "https://jira.fr.anotherworld/secure/useravatar?avatarId=10122",
+            "24x24": "https://jira.fr.anotherworld/secure/useravatar?size=small&avatarId=10122",
+            "16x16": "https://jira.fr.anotherworld/secure/useravatar?size=xsmall&avatarId=10122",
+            "32x32": "https://jira.fr.anotherworld/secure/useravatar?size=medium&avatarId=10122"
+          },
+          "displayName": "Uzumaki KickAss",
+          "active": true,
+          "timeZone": "Europe/Paris"
+        },
+        "progress": { "progress": 0, "total": 0 },
+        "votes": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/issue/DELTA-1931/votes",
+          "votes": 0,
+          "hasVoted": false
+        },
+        "issuetype": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/issuetype/10100",
+          "id": "10100",
+          "description": "A task that needs to be done.",
+          "iconUrl": "https://jira.fr.anotherworld/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+          "name": "Task",
+          "subtask": false,
+          "avatarId": 10318
+        },
+        "timespent": null,
+        "project": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/project/13601",
+          "id": "13601",
+          "key": "DELTA",
+          "name": "Ninja Corporate",
+          "projectTypeKey": "software",
+          "avatarUrls": {
+            "48x48": "https://jira.fr.anotherworld/secure/projectavatar?avatarId=10324",
+            "24x24": "https://jira.fr.anotherworld/secure/projectavatar?size=small&avatarId=10324",
+            "16x16": "https://jira.fr.anotherworld/secure/projectavatar?size=xsmall&avatarId=10324",
+            "32x32": "https://jira.fr.anotherworld/secure/projectavatar?size=medium&avatarId=10324"
+          },
+          "projectCategory": {
+            "self": "https://jira.fr.anotherworld/rest/api/2/projectCategory/11001",
+            "id": "11001",
+            "description": "",
+            "name": "TRIO"
+          }
+        },
+        "workratio": -1,
+        "watches": {
+          "self": "https://jira.fr.anotherworld/rest/api/2/issue/DELTA-1931/watchers",
+          "watchCount": 1,
+          "isWatching": false
+        },
+        "comment": {
+          "comments": [
+            {
+              "self": "https://jira.io/rest/api/2/issue/782674/comment/747211",
+              "id": "747211",
+              "author": {
+                "self": "https://jira.io/rest/api/2/user?username=takzeo.musashi%40legends.com",
+                "name": "takzeo.musashi@legends.com",
+                "key": "takzeo.musashi@legends.com",
+                "emailAddress": "takzeo.musashi@legends.com",
+                "avatarUrls": {
+                  "48x48": "https://jira.io/secure/useravatar?ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "24x24": "https://jira.io/secure/useravatar?size=small&ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "16x16": "https://jira.io/secure/useravatar?size=xsmall&ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "32x32": "https://jira.io/secure/useravatar?size=medium&ownerId=takzeo.musashi%40legends.com&avatarId=20630"
+                },
+                "displayName": "Takzeo Musashi",
+                "active": true,
+                "timeZone": "Europe/Paris"
+              },
+              "body": "No pain, no gain",
+              "updateAuthor": {
+                "self": "https://jira.io/rest/api/2/user?username=takzeo.musashi%40legends.com",
+                "name": "takzeo.musashi@legends.com",
+                "key": "takzeo.musashi@legends.com",
+                "emailAddress": "takzeo.musashi@legends.com",
+                "avatarUrls": {
+                  "48x48": "https://jira.io/secure/useravatar?ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "24x24": "https://jira.io/secure/useravatar?size=small&ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "16x16": "https://jira.io/secure/useravatar?size=xsmall&ownerId=takzeo.musashi%40legends.com&avatarId=20630",
+                  "32x32": "https://jira.io/secure/useravatar?size=medium&ownerId=takzeo.musashi%40legends.com&avatarId=20630"
+                },
+                "displayName": "Takzeo Musashi",
+                "active": true,
+                "timeZone": "Europe/Paris"
+              },
+              "created": "2020-03-18T14:41:00.289+0100",
+              "updated": "2020-03-18T14:41:00.289+0100"
+            }
+          ]
+        },
+        "created": "2020-03-23T17:38:38.000+0100",
+        "updated": "2020-03-23T17:52:21.000+0100",
+        "timeoriginalestimate": null,
+        "description": "Let me write something\r\nReally long\r\n\r\nCause why not ?",
+        "customfield_10005": "00|i40000",
+        "summary": "How to escape ?",
+        "environment": null,
+        "duedate": null
+      }
+    },
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "875942",
+      "self": "https://myendpoint.com/rest/api/2/issue/875942",
+      "key": "GG-EPICA",
+      "fields": {
+        "fixVersions": [],
+        "resolution": null,
+        "lastViewed": null,
+        "priority": {
+          "self": "https://myendpoint.com/rest/api/2/priority/3",
+          "iconUrl": "https://myendpoint.com/images/icons/priorities/medium.svg",
+          "name": "Medium",
+          "id": "3"
+        },
+        "labels": ["lab1", "lab2"],
+        "aggregatetimeoriginalestimate": null,
+        "timeestimate": null,
+        "versions": [],
+        "issuelinks": [],
+        "assignee": null,
+        "status": {
+          "self": "https://myendpoint.com/rest/api/2/status/10026",
+          "description": "",
+          "iconUrl": "https://myendpoint.com/",
+          "name": "Backlog",
+          "id": "10026",
+          "statusCategory": {
+            "self": "https://myendpoint.com/rest/api/2/statuscategory/2",
+            "id": 2,
+            "key": "new",
+            "colorName": "blue-gray",
+            "name": "To Do"
+          }
+        },
+        "components": [
+          {
+            "self": "https://myendpoint.com/rest/api/2/component/27077",
+            "id": "27077",
+            "name": ""
+          }
+        ],
+        "archiveddate": null,
+        "aggregatetimeestimate": null,
+        "creator": {
+          "self": "https://myendpoint.com/rest/api/2/user?username=nameowner.LastName%40mydomain.com",
+          "name": "nameowner.LastName@mydomain.com",
+          "key": "nameowner.LastName@mydomain.com",
+          "emailAddress": "nameowner.LastName@mydomain.com",
+          "avatarUrls": {
+            "48x48": "https://myendpoint.com/secure/useravatar?ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "24x24": "https://myendpoint.com/secure/useravatar?size=small&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "16x16": "https://myendpoint.com/secure/useravatar?size=xsmall&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "32x32": "https://myendpoint.com/secure/useravatar?size=medium&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578"
+          },
+          "displayName": "NameOwner LastName",
+          "active": true,
+          "timeZone": "Europe/Paris"
+        },
+        "subtasks": [],
+        "reporter": {
+          "self": "https://myendpoint.com/rest/api/2/user?username=nameowner.LastName%40mydomain.com",
+          "name": "nameowner.LastName@mydomain.com",
+          "key": "nameowner.LastName@mydomain.com",
+          "emailAddress": "nameowner.LastName@mydomain.com",
+          "avatarUrls": {
+            "48x48": "https://myendpoint.com/secure/useravatar?ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "24x24": "https://myendpoint.com/secure/useravatar?size=small&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "16x16": "https://myendpoint.com/secure/useravatar?size=xsmall&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578",
+            "32x32": "https://myendpoint.com/secure/useravatar?size=medium&ownerId=nameowner.LastName%40mydomain.com&avatarId=19578"
+          },
+          "displayName": "NameOwner LastName",
+          "active": true,
+          "timeZone": "Europe/Paris"
+        },
+        "aggregateprogress": { "progress": 0, "total": 0 },
+        "progress": { "progress": 0, "total": 0 },
+        "votes": {
+          "self": "https://myendpoint.com/rest/api/2/issue/GG-EPICA/votes",
+          "votes": 0,
+          "hasVoted": false
+        },
+        "worklog": {
+          "startAt": 0,
+          "maxResults": 20,
+          "total": 0,
+          "worklogs": []
+        },
+        "archivedby": null,
+        "issuetype": {
+          "self": "https://myendpoint.com/rest/api/2/issuetype/10000",
+          "id": "10000",
+          "description": "Created by Jira Software - do not edit or delete. Issue type for a big user story that needs to be broken down.",
+          "iconUrl": "https://myendpoint.com/images/icons/issuetypes/epic.svg",
+          "name": "Epic",
+          "subtask": false
+        },
+        "timespent": null,
+        "project": {
+          "self": "https://myendpoint.com/rest/api/2/project/13601",
+          "id": "13601",
+          "key": "",
+          "name": "",
+          "projectTypeKey": "software",
+          "avatarUrls": {
+            "48x48": "https://myendpoint.com/secure/projectavatar?avatarId=10324",
+            "24x24": "https://myendpoint.com/secure/projectavatar?size=small&avatarId=10324",
+            "16x16": "https://myendpoint.com/secure/projectavatar?size=xsmall&avatarId=10324",
+            "32x32": "https://myendpoint.com/secure/projectavatar?size=medium&avatarId=10324"
+          },
+          "projectCategory": {
+            "self": "https://myendpoint.com/rest/api/2/projectCategory/10203",
+            "id": "10203",
+            "description": "",
+            "name": "XBC"
+          }
+        },
+        "aggregatetimespent": null,
+        "resolutiondate": null,
+        "workratio": -1,
+        "watches": {
+          "self": "https://myendpoint.com/rest/api/2/issue/GG-EPICA/watchers",
+          "watchCount": 1,
+          "isWatching": false
+        },
+        "created": "2010-01-13T10:02:50.000+0100",
+        "updated": "2019-05-27T15:06:28.000+0200",
+        "timeoriginalestimate": null,
+        "description": "Epic description",
+        "timetracking": {},
+        "attachment": [],
+        "summary": "Epic summary",
+        "environment": null,
+        "duedate": null,
+        "comment": { "comments": [], "maxResults": 0, "total": 0, "startAt": 0 }
+      }
+    }
+  ]
+}
