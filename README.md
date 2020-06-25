@@ -16,6 +16,12 @@ Write a csv report
 cat response.json | jiradata myreport.csv
 ```
 
+With some 'Epic' and issue related to it :
+
+```shell
+cat response.json |jiradata --epic-field customfield_10000 report.csv
+```
+
 ## Hold up what is this `reponse.json` ?
 
 Issues in json format from the JIRA REST API.

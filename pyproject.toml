@@ -2,7 +2,8 @@
 name = "jiradata"
 version = "1.1.0"
 description = "Simple JIRA data manipulation"
-authors = ["Khalid <khalidck@gmail.com>"]
+authors = ["Khalid CK <fr.ckhalid@gmail.com>"]
+readme = "README.md"
 
 [tool.poetry.scripts]
 jiradata = 'jiradata.jiradata:cli'
