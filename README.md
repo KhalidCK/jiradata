@@ -26,7 +26,7 @@ cat response.json |jiradata --epic-field customfield_10000 report.csv
 
 They are issues in json format retrieved using the JIRA REST API.
 
-What I found convenient is to use the [search API](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-post)) with JQL.
+What I found convenient is to use the [search API](https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-post) with JQL.
 
 For example, using [httpie](https://httpie.org/) :
 
