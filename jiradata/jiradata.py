@@ -126,11 +126,11 @@ def add_epic(report: pd.DataFrame, epic_field: str) -> pd.DataFrame:
     return merged.drop(columns=epic_field)
 
 def writecsv(df:pd.DataFrame,reportfile):
-    df.sort_index(axis=1).to_csv(reportfile, index=False)
+    df.sort_index(axis=1).to_csv(reportfile, index=False,encoding='utf8')
 
 @click.command()
 @click.argument('reportfile', type=click.Path(dir_okay=True))
-@click.argument('jsondata', type=click.File(mode='r'), default=sys.stdin)
+@click.argument('jsondata', type=click.File(mode='r',encoding='utf8'), default=sys.stdin)
 @click.option('--custom-field')
 @click.option('--epic-field')
 def cli(reportfile, jsondata, custom_field, epic_field):
