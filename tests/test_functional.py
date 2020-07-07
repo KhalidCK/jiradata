@@ -46,3 +46,13 @@ def test_cli_epic_field(shared_datadir, tmp_path):
     assert len(processed) > 0
     csvcols = list(processed.columns)
     assert any([col for col in csvcols if 'epic_' in col])
+
+def test_cli_infer_excel_format_output(shared_datadir,tmp_path):
+    runner = CliRunner()
+    data = str(shared_datadir/'response.json')
+    report = tmp_path/'report.xlsx'
+    result = runner.invoke(cli, [str(report), data])
+    print(result.stdout)
+    assert result.exit_code == 0
+    processed = pd.read_excel(report)
+    assert len(processed) == 1

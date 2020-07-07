@@ -83,6 +83,17 @@ python-versions = "*"
 version = "0.3.0"
 
 [[package]]
+category = "main"
+description = ""
+name = "ecrivain"
+optional = false
+python-versions = ">=3.7,<4.0"
+version = "0.1.2"
+
+[package.dependencies]
+XlsxWriter = ">=1.2.8,<2.0.0"
+
+[[package]]
 category = "dev"
 description = "A platform independent file lock."
 name = "filelock"
@@ -412,6 +423,22 @@ version = "1.11.2"
 
 [[package]]
 category = "dev"
+description = "Library for developers to extract data from Microsoft Excel (tm) spreadsheet files"
+name = "xlrd"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.2.0"
+
+[[package]]
+category = "main"
+description = "A Python module for creating Excel XLSX files."
+name = "xlsxwriter"
+optional = false
+python-versions = "*"
+version = "1.2.9"
+
+[[package]]
+category = "dev"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 marker = "python_version < \"3.8\""
 name = "zipp"
@@ -424,7 +451,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "2d07eff2f5f2905e7a491f6c7cfc66cc195597c553e86b41b7a6a1f5f02b5ab6"
+content-hash = "8754e7eaf887ef365b8088f188b86819bc3936ecbed3fd90329dbee7c9f4320a"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -457,6 +484,10 @@ colorama = [
 ]
 distlib = [
     {file = "distlib-0.3.0.zip", hash = "sha256:2e166e231a26b36d6dfe35a48c4464346620f8645ed0ace01ee31822b288de21"},
+]
+ecrivain = [
+    {file = "ecrivain-0.1.2-py3-none-any.whl", hash = "sha256:bc77ac49aed3243de2bd5c5b85971aa6b7e507505ee975ba64817205a9c1276c"},
+    {file = "ecrivain-0.1.2.tar.gz", hash = "sha256:9db98b1f026af70c5396e2b18da3d48f8c45dec7a7edd16ca5e7663cacee1aa6"},
 ]
 filelock = [
     {file = "filelock-3.0.12-py3-none-any.whl", hash = "sha256:929b7d63ec5b7d6b71b0fa5ac14e030b3f70b75747cef1b10da9b879fef15836"},
@@ -657,6 +688,14 @@ wcwidth = [
 ]
 wrapt = [
     {file = "wrapt-1.11.2.tar.gz", hash = "sha256:565a021fd19419476b9362b05eeaa094178de64f8361e44468f9e9d7843901e1"},
+]
+xlrd = [
+    {file = "xlrd-1.2.0-py2.py3-none-any.whl", hash = "sha256:e551fb498759fa3a5384a94ccd4c3c02eb7c00ea424426e212ac0c57be9dfbde"},
+    {file = "xlrd-1.2.0.tar.gz", hash = "sha256:546eb36cee8db40c3eaa46c351e67ffee6eeb5fa2650b71bc4c758a29a1b29b2"},
+]
+xlsxwriter = [
+    {file = "XlsxWriter-1.2.9-py2.py3-none-any.whl", hash = "sha256:82a3b0e73e3913483da23791d1a25e4d2dbb3837d1be4129473526b9a270a5cc"},
+    {file = "XlsxWriter-1.2.9.tar.gz", hash = "sha256:828b3285fc95105f5b1946a6a015b31cf388bd5378fdc6604e4d1b7839df2e77"},
 ]
 zipp = [
     {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},

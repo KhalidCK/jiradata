@@ -1,18 +1,10 @@
 import json
 import pandas as pd
+import pytest
+import pathlib
 
 from jiradata.jiradata import (Comment, comment2str, get_gist_issue,
-                               get_last_comment, make_report, add_epic)
-
-# def test_retrieve_value_from_issue():
-#     simple = {'myitem': 'stuff'}
-#     assert get_value(simple['myitem']) == 'stuff'
-#     nested = {'myitem': {'a': 1, 'name': 'myname'}}
-#     assert get_value(nested['myitem']) == 'myname'
-#     withlist = {'myitem': ['a', 'b']}
-#     assert get_value(withlist['myitem']) == 'a,b'
-#     outofscope = {'myitem': {'a': 1}}
-#     assert get_value(outofscope['myitem']) == ''
+                               get_last_comment, make_report, add_epic,get_format)
 
 
 def test_retrieve_last_comment():
@@ -117,3 +109,8 @@ def test_make_report_epic(shared_datadir):
     # raise exception if not equal
     pd.testing.assert_frame_equal(
         expected, processed, check_like=True, check_dtype=False)
+
+def test_get_extension():
+    with pytest.raises(ValueError):
+        get_format(pathlib.Path('mytreport.xml'))
+    assert get_format(pathlib.Path('mytreport.csv')) == '.csv'

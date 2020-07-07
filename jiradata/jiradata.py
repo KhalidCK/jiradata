@@ -7,6 +7,8 @@ from collections import Counter
 from dataclasses import asdict
 from functools import reduce
 from typing import Any, Iterable, List, Set, Tuple, Union
+from pathlib import Path
+from ecrivain import xlsx
 
 import click
 import pandas as pd
@@ -25,6 +27,7 @@ KEYS = ['assignee',
         'status',
         'summary']
 
+FORMAT = {'.csv', '.xlsx'}
 
 Comment = namedtuple('Comment', ['author', 'updated', 'msg'])
 
@@ -108,7 +111,7 @@ def get_gist_issue(key: str, issue: dict, custom_field: dict = {}) -> dict:
     return fields
 
 
-def make_report(issues: list, custom:dict={}) -> pd.DataFrame:
+def make_report(issues: list, custom: dict = {}) -> pd.DataFrame:
     processed = [get_gist_issue(issue['key'], issue['fields'], custom)
                  for issue in issues]
     df = pd.DataFrame(processed)
@@ -119,35 +122,50 @@ def make_report(issues: list, custom:dict={}) -> pd.DataFrame:
 def add_epic(report: pd.DataFrame, epic_field: str) -> pd.DataFrame:
     epic = report.query('issuetype=="Epic"')[['key', 'description']]
     epic = epic.rename(
-        columns={'description': 'epic_summary', 
+        columns={'description': 'epic_summary',
                  'key': 'epic_key'})
     merged = pd.merge(left=report, right=epic, how='left',
                       left_on=epic_field, right_on='epic_key')
     return merged.drop(columns=epic_field)
 
-def writecsv(df:pd.DataFrame,reportfile):
-    df.sort_index(axis=1).to_csv(reportfile, index=False,encoding='utf8')
+
+def get_format(pathfile: Path):
+    """infer format from file extension, raise if the format is not supported"""
+    suffix = pathfile.suffix
+    if suffix.lower() not in FORMAT:
+        raise ValueError(
+            f'"{pathfile}" does not have a valid extension, supported:{FORMAT} ')
+    return suffix
+
 
 @click.command()
 @click.argument('reportfile', type=click.Path(dir_okay=True))
-@click.argument('jsondata', type=click.File(mode='r',encoding='utf8'), default=sys.stdin)
+@click.argument('jsondata', type=click.File(mode='r', encoding='utf8'), default=sys.stdin)
 @click.option('--custom-field')
 @click.option('--epic-field')
 def cli(reportfile, jsondata, custom_field, epic_field):
+    def writecsv(df: pd.DataFrame, reportfile):
+        df.sort_index(axis=1).to_csv(reportfile, index=False, encoding='utf8')
+    def writexlsx(df: pd.DataFrame, reportfile):
+        xlsx.write_excel(df, reportfile)
     # write a csv to reportfile
+    fileformat = get_format(Path(reportfile))
+    #writer is used here as a "switch"
+    writerformat = {'.csv': writecsv, '.xlsx': writexlsx}
+    writer = writerformat[fileformat]
     if custom_field:
         custom = {custom_field: lambda x: str(x)}
     elif epic_field:
-        custom = {epic_field: lambda x:str(x)}
+        custom = {epic_field: lambda x: str(x)}
     else:
         custom = {}
     issues = json.load(jsondata)['issues']
     report = make_report(issues, custom=custom)
     if epic_field:
         click.echo(f'looking for epic using field {epic_field}')
-        report = add_epic(report,epic_field)
+        report = add_epic(report, epic_field)
         click.echo(f'writing result to {reportfile}')
-        writecsv(report,reportfile)
+        writer(report, reportfile)
     else:
         click.echo(f'writing result to {reportfile}')
-        writecsv(report,reportfile)
+        writer(report, reportfile)
