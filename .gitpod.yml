@@ -8,8 +8,9 @@ ports:
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - init: poetry init
-    command: poetry install 
+  # see https://www.gitmemory.com/issue/gitpod-io/gitpod/1552/634464189
+  - init: echo 'export PIP_USER=false' >> ~/.bashrc && poetry config virtualenvs.in-project true
+    command: poetry install
 
 github:
   prebuilds:
