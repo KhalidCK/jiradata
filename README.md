@@ -1,6 +1,6 @@
 # Jira data
 
-![Python package](https://github.com/KhalidCK/jiradata/workflows/Python%20package/badge.svg)
+![Python package](https://github.com/KhalidCK/jiradata/workflows/Pytest/badge.svg)
 
 > Cause sometimes you need to sort out your issues
 
