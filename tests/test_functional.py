@@ -54,5 +54,5 @@ def test_cli_infer_excel_format_output(shared_datadir,tmp_path):
     result = runner.invoke(cli, [str(report), data])
     print(result.stdout)
     assert result.exit_code == 0
-    processed = pd.read_excel(report)
+    processed = pd.read_excel(report,engine='openpyxl')
     assert len(processed) == 1
